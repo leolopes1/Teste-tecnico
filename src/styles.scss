@@ -2,8 +2,34 @@
 
 html {
   @include mat.theme((
-    color: mat.$violet-palette,
+    color: (
+      theme-type: light,
+      primary: mat.$green-palette,
+      tertiary: mat.$cyan-palette,
+    ),
     typography: Roboto,
     density: 0
   ));
+
+  // Ajusta o verde gerado para o tom "verde-petróleo" pedido no desafio
+  @include mat.theme-overrides((
+    primary: #0d5c52,
+    primary-container: #d7efe9,
+    on-primary-container: #0a3e37,
+  ));
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: #f2f4f3;
+  color: #1a1a1a;
 }

@@ -1,11 +1,11 @@
 <section class="filter-panel">
 
-  <div class="filter-header">
-    <div>
-      <span class="filter-title">Filtros</span>
-      <small>PESQUISAR LOTES OUTROS CRÉDITOS/DÉBITOS</small>
-    </div>
+<div class="filter-header">
+  <div class="filter-heading">
+    <span class="filter-title">Filtros</span>
+    <span class="filter-subtitle">Pesquisar Lotes Outros Créditos/Débitos</span>
   </div>
+</div>
 
 <form [formGroup]="form">
 
@@ -141,6 +141,7 @@
       <button
         mat-flat-button
         type="button"
+        color="primary"
         (click)="onPesquisar()"
       >
         Pesquisar
