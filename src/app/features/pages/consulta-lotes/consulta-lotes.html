@@ -1,1 +1,82 @@
-<p>consulta-lotes works!</p>
+<div class="page">
+
+  <header class="page-header">
+
+    <div>
+      <h1>Outros Créditos/Débitos</h1>
+
+      <div class="breadcrumb">
+        <span>Início</span>
+        <mat-icon>chevron_right</mat-icon>
+        <span>Outros Créditos/Débitos</span>
+      </div>
+    </div>
+
+  </header>
+
+  <main class="content">
+
+    @if (filtrosVisiveis()) {
+      <app-filtros-lote
+        (pesquisar)="pesquisar($event)"
+      />
+    }
+
+    <div class="toolbar">
+
+      <button
+        mat-stroked-button
+        [disabled]="!possuiSelecao()"
+        (click)="confirmar()"
+      >
+        Confirmar
+      </button>
+
+      <button
+        mat-stroked-button
+        [disabled]="!possuiSelecao()"
+        (click)="enviar()"
+      >
+        Enviar
+      </button>
+
+      <button
+        mat-stroked-button
+        [disabled]="!possuiSelecao()"
+        (click)="visualizarJustificativa()"
+      >
+        Visualizar Justificativa
+      </button>
+
+      <button
+        mat-flat-button
+        (click)="incluir()"
+      >
+        Incluir
+      </button>
+
+      <button
+        mat-stroked-button
+        [disabled]="!selecaoUnica()"
+      >
+        Alterar
+      </button>
+
+      <button
+        mat-stroked-button
+        [disabled]="!selecaoUnica()"
+      >
+        Excluir
+      </button>
+
+      <button
+        mat-stroked-button
+        [disabled]="!selecaoUnica()"
+      >
+        Visualizar
+      </button>
+
+    </div>
+  </main>
+
+</div>
