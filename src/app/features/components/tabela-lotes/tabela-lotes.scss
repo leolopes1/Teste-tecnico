@@ -1,0 +1,48 @@
+:host { display: block; }
+
+.table-wrapper { overflow-x: auto; }
+
+.lotes-table {
+  width: 100%;
+
+  th.mat-mdc-header-cell {
+    background: #0d1f1c;
+    color: #fff;
+    font-weight: 500;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  td.mat-mdc-cell {
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  tr.mat-mdc-row {
+    cursor: pointer;
+    &:hover { background: #f5f8f7; }
+  }
+
+  tr.selected-row { background: #e7f3f0; }
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+
+  &--aberto { background: #e3edfb; color: #1552b0; }
+  &--enviado { background: #fdf1d8; color: #9a6a06; }
+  &--confirmado { background: #dcf3e7; color: #16713f; }
+}
+
+.empty-state {
+  padding: 32px 16px;
+  text-align: center;
+  color: #7a7a7a;
+  font-size: 13px;
+}
+
+mat-paginator { border-top: 1px solid #eee; }

@@ -78,6 +78,11 @@
       </button>
 
     </div>
+    <app-tabela-lotes
+      [lotes]="lotes()"
+      [loading]="loading()"
+      (selecaoAlterada)="onSelecaoAlterada($event)"
+    />
   </main>
 
 </div>

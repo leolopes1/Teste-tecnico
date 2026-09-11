@@ -5,10 +5,11 @@ import { FiltroLote } from '../../../models/filtro-lote';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { FiltrosLote } from '../filtros-lote/filtros-lote';
+import { TabelaLotes } from '../../components/tabela-lotes/tabela-lotes';
 
 
 @Component({
-  imports: [MatButtonModule, MatIconModule, FiltrosLote],
+  imports: [MatButtonModule, MatIconModule, FiltrosLote,TabelaLotes],
   selector: 'app-consulta-lotes',
   styleUrl: './consulta-lotes.scss',
   templateUrl: './consulta-lotes.html',
