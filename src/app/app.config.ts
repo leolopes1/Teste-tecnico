@@ -4,6 +4,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { routes } from './app.routes';
 import localePt from '@angular/common/locales/pt';
+import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { registerLocaleData } from '@angular/common';
 registerLocaleData(localePt);
 
@@ -11,7 +12,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    provideAnimationsAsync(),
+    provideEnvironmentNgxMask(),
     provideNativeDateAdapter(),
     { provide: LOCALE_ID, useValue: 'pt-BR' }
   ]

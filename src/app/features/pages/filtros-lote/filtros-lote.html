@@ -1,30 +1,24 @@
 <section class="filter-panel">
 
-<div class="filter-header">
-  <div class="filter-heading">
-    <span class="filter-title">Filtros</span>
-    <span class="filter-subtitle">Pesquisar Lotes Outros Créditos/Débitos</span>
+  <div class="filter-header">
+    <div class="filter-heading">
+      <span class="filter-title">Filtros</span>
+      <span class="filter-subtitle">Pesquisar Lotes Outros Créditos/Débitos</span>
+    </div>
   </div>
-</div>
 
-<form [formGroup]="form">
+  <form [formGroup]="form">
 
     <div class="filter-grid">
 
       <mat-form-field appearance="outline">
         <mat-label>Instituição Resp.</mat-label>
-        <input
-          matInput
-          formControlName="instituicaoResponsavel"
-        />
+        <input matInput formControlName="instituicaoResponsavel" />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Instituição</mat-label>
-        <input
-          matInput
-          formControlName="instituicao"
-        />
+        <input matInput formControlName="instituicao" />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -55,20 +49,12 @@
         <div>
           <mat-form-field appearance="outline">
             <mat-label>De</mat-label>
-            <input
-              matInput
-              type="number"
-              formControlName="idLoteDe"
-            />
+            <input matInput type="number" formControlName="idLoteDe" />
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Até</mat-label>
-            <input
-              matInput
-              type="number"
-              formControlName="idLoteAte"
-            />
+            <input matInput type="number" formControlName="idLoteAte" />
           </mat-form-field>
         </div>
       </div>
@@ -79,20 +65,14 @@
         <div>
           <mat-form-field appearance="outline">
             <mat-label>De</mat-label>
-            <input
-              matInput
-              type="number"
-              formControlName="valorLoteDe"
-            />
+            <input matInput mask="separator.2" thousandSeparator="." decimalMarker="," prefix="R$ " inputmode="decimal"
+              formControlName="valorLoteDe" />
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Até</mat-label>
-            <input
-              matInput
-              type="number"
-              formControlName="valorLoteAte"
-            />
+            <input matInput mask="separator.2" thousandSeparator="." decimalMarker="," prefix="R$ " inputmode="decimal"
+              formControlName="valorLoteAte" />
           </mat-form-field>
         </div>
       </div>
@@ -104,32 +84,18 @@
           <mat-form-field appearance="outline">
             <mat-label>De</mat-label>
 
-            <input
-              matInput
-              [matDatepicker]="dataDe"
-              formControlName="dataEntradaDe"
-            />
+            <input matInput [matDatepicker]="dataDe" formControlName="dataEntradaDe" />
 
-            <mat-datepicker-toggle
-              matIconSuffix
-              [for]="dataDe"
-            />
+            <mat-datepicker-toggle matIconSuffix [for]="dataDe" />
             <mat-datepicker #dataDe />
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Até</mat-label>
 
-            <input
-              matInput
-              [matDatepicker]="dataAte"
-              formControlName="dataEntradaAte"
-            />
+            <input matInput [matDatepicker]="dataAte" formControlName="dataEntradaAte" />
 
-            <mat-datepicker-toggle
-              matIconSuffix
-              [for]="dataAte"
-            />
+            <mat-datepicker-toggle matIconSuffix [for]="dataAte" />
             <mat-datepicker #dataAte />
           </mat-form-field>
         </div>
@@ -138,12 +104,7 @@
     </div>
 
     <div class="filter-actions">
-      <button
-        mat-flat-button
-        type="button"
-        color="primary"
-        (click)="onPesquisar()"
-      >
+      <button mat-flat-button type="button" color="primary" (click)="onPesquisar()">
         Pesquisar
       </button>
     </div>

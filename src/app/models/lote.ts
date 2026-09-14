@@ -12,4 +12,6 @@ export interface Lote {
   usuarioAprovacao: string | null;
   situacao: SituacaoLote;
   dataHoraSituacao: Date;
+  instituicaoResponsavel: string;
+  instituicao: string;
 }
