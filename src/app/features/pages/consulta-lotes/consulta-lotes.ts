@@ -6,10 +6,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { FiltrosLote } from '../filtros-lote/filtros-lote';
 import { TabelaLotes } from '../../components/tabela-lotes/tabela-lotes';
+import { MatDialog } from '@angular/material/dialog';
+import { Lancamento } from '../../../models/lancamento';
+import { LancamentoDialog, LancamentoDialogData } from '../../components/lancamento-dialog/lancamento-dialog';
 
 
 @Component({
-  imports: [MatButtonModule, MatIconModule, FiltrosLote,TabelaLotes],
+  imports: [MatButtonModule, MatIconModule, FiltrosLote, TabelaLotes],
   selector: 'app-consulta-lotes',
   styleUrl: './consulta-lotes.scss',
   templateUrl: './consulta-lotes.html',
@@ -30,6 +33,8 @@ export class ConsultaLotes {
   readonly selecaoUnica = computed(
     () => this.selecionados().length === 1
   );
+  private readonly dialog = inject(MatDialog);
+  private readonly lancamentosPorLote = new Map<number, Lancamento[]>();
 
   pesquisar(filtros: FiltroLote): void {
 
@@ -75,7 +80,26 @@ export class ConsultaLotes {
   }
 
   incluir(): void {
-    console.log('Abrir modal');
+
+    const loteSelecionado = this.selecaoUnica() ? this.selecionados()[0] : null;
+    const loteId = loteSelecionado?.id ?? 0;
+    const lancamentosAtuais = this.lancamentosPorLote.get(loteId) ?? [];
+
+    const dialogRef = this.dialog.open<LancamentoDialog, LancamentoDialogData, Lancamento[]>(
+      LancamentoDialog,
+      {
+        width: '720px',
+        maxWidth: '95vw',
+        autoFocus: false,
+        data: { loteId, lancamentos: lancamentosAtuais }
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((lancamentos) => {
+      if (lancamentos) {
+        this.lancamentosPorLote.set(loteId, lancamentos);
+      }
+    });
   }
 
 }

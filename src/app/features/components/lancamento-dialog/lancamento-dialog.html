@@ -1,0 +1,155 @@
+<h2 mat-dialog-title>Incluir Lançamento</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="lancamento-form">
+
+    <h3 class="section-title">Conta Corrente</h3>
+
+    <div class="conta-row">
+      <mat-form-field appearance="outline" class="conta-field">
+        <mat-label>Conta Corrente *</mat-label>
+        <input matInput formControlName="contaCorrente" />
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          [disabled]="buscandoTitular()"
+          (click)="buscarConta()"
+        >
+          <mat-icon>search</mat-icon>
+        </button>
+        @if (form.controls.contaCorrente.touched && form.controls.contaCorrente.hasError('required')) {
+          <mat-error>Informe a conta corrente.</mat-error>
+        }
+      </mat-form-field>
+
+      @if (buscandoTitular()) {
+        <span class="titular-status">Buscando...</span>
+      } @else if (titularEncontrado()) {
+        <span class="titular-status titular-status--ok">{{ titularEncontrado() }}</span>
+      } @else if (buscaSemResultado()) {
+        <span class="titular-status titular-status--erro">Conta não encontrada</span>
+      }
+    </div>
+
+    <div class="grid-2">
+      <mat-form-field appearance="outline">
+        <mat-label>Valor *</mat-label>
+        <span matTextPrefix>R$&nbsp;</span>
+        <input matInput type="number" step="0.01" formControlName="valor" />
+        @if (form.controls.valor.touched && form.controls.valor.hasError('required')) {
+          <mat-error>Informe o valor.</mat-error>
+        }
+        @if (form.controls.valor.touched && form.controls.valor.hasError('valorPositivo')) {
+          <mat-error>O valor deve ser maior que zero.</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Histórico *</mat-label>
+        <mat-select formControlName="historico">
+          <mat-option value="Lançamento Manual">Lançamento Manual</mat-option>
+          <mat-option value="Estorno de Lançamento">Estorno de Lançamento</mat-option>
+          <mat-option value="Ajuste Contábil">Ajuste Contábil</mat-option>
+        </mat-select>
+        @if (form.controls.historico.touched && form.controls.historico.hasError('required')) {
+          <mat-error>Selecione o histórico.</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <mat-checkbox formControlName="estorno" class="estorno-checkbox">Estorno</mat-checkbox>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Documento *</mat-label>
+      <input matInput formControlName="documento" />
+      @if (form.controls.documento.touched && form.controls.documento.hasError('required')) {
+        <mat-error>Informe o documento.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Descrição</mat-label>
+      <textarea matInput formControlName="descricao" rows="3"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="situacao-field">
+      <mat-label>Situação</mat-label>
+      <input matInput formControlName="situacao" readonly />
+    </mat-form-field>
+
+    <div class="lancamentos-grid">
+      <h3 class="section-title">Lançamentos</h3>
+
+      <table mat-table [dataSource]="lancamentos()" class="lancamentos-table">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>Id Lançamento</th>
+          <td mat-cell *matCellDef="let l">{{ l.id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="pa">
+          <th mat-header-cell *matHeaderCellDef>PA</th>
+          <td mat-cell *matCellDef="let l">{{ l.pa }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="contaCorrente">
+          <th mat-header-cell *matHeaderCellDef>Conta Corrente</th>
+          <td mat-cell *matCellDef="let l">{{ l.contaCorrente }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="historico">
+          <th mat-header-cell *matHeaderCellDef>Histórico</th>
+          <td mat-cell *matCellDef="let l">{{ l.historico }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="situacao">
+          <th mat-header-cell *matHeaderCellDef>Situação</th>
+          <td mat-cell *matCellDef="let l">{{ l.situacao === 'PENDENTE' ? 'Pendente' : 'Confirmado' }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let l; columns: displayedColumns"
+          [class.selected-row]="selecionadoId() === l.id"
+          (click)="selecionar(l)"
+        ></tr>
+      </table>
+
+      @if (lancamentos().length === 0) {
+        <p class="empty-lancamentos">Nenhum lançamento incluído ainda.</p>
+      }
+    </div>
+
+    <h3 class="section-title">Documento CSC</h3>
+
+    <mat-form-field appearance="outline" class="pa-field">
+      <mat-label>PA *</mat-label>
+      <mat-select formControlName="pa">
+        <mat-option value="0001">0001</mat-option>
+        <mat-option value="0002">0002</mat-option>
+        <mat-option value="0003">0003</mat-option>
+      </mat-select>
+      @if (form.controls.pa.touched && form.controls.pa.hasError('required')) {
+        <mat-error>Selecione o PA.</mat-error>
+      }
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="dialog-actions">
+  <button mat-stroked-button type="button" [disabled]="!possuiSelecao()" (click)="duplicar()">Duplicar</button>
+
+  <span class="spacer"></span>
+
+  <button mat-stroked-button type="button" [disabled]="!possuiSelecao()" (click)="visualizar()">Visualizar</button>
+  <button mat-stroked-button type="button" (click)="incluir()">Incluir</button>
+  <button mat-stroked-button type="button" [disabled]="!possuiSelecao()" (click)="alterar()">Alterar</button>
+  <button mat-stroked-button type="button" [disabled]="!possuiSelecao()" (click)="excluir()">Excluir</button>
+</mat-dialog-actions>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="cancelar()">Cancelar</button>
+  <button mat-flat-button color="primary" type="button" (click)="salvar()">Salvar</button>
+</mat-dialog-actions>
